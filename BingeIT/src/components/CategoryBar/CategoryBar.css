@@ -1,0 +1,23 @@
+.category-bar{
+  background-color: var(--bg-color1);
+  width:100%;
+  padding: 0.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  overflow-x: scroll;
+  position: fixed;
+}
+.chips{
+  padding:5px 10px;
+  background-color: var(--white-color);
+  border-radius: 1rem;
+  color: var(--black-color);
+  width: max-content;
+  cursor: pointer;
+white-space: nowrap;
+}
+.chips:hover{
+  background-color: var(--hover-color);
+  color: var(--text-color);
+}

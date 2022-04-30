@@ -1,9 +1,9 @@
-import { Header } from "../../components/Header/Header";
 import "./Homepage.css";
+import { CategoryBar } from "../../components/CategoryBar/CategoryBar";
 const Homepage = () => {
   return (
     <>
-      <Header />
+      <CategoryBar />
     </>
   );
 };

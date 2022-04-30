@@ -1,0 +1,69 @@
+.header{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 2rem;
+  background-color: var(--bg-color1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+.header .brand-name{
+  color:var(--text-color);
+  letter-spacing: 2px;
+  font-size: 1.5rem;
+}
+.header .search-box{
+  display: flex;
+align-items: center;
+width: 50%;
+
+}
+.search-input{
+  padding: 10px;
+width: 100%;
+background-color: var(--bg-color1);
+color: var(--text-color);
+border: 1px solid var(--text-color);
+}
+.search-input:active{
+  border: none;
+}
+.search-button{
+  margin: 10px;
+  background-color: var(--bg-color2);
+  border: none;
+}
+.search-button .search-icon{
+  color:var(--text-color);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+.search-button .search-icon:active{
+  border: none;
+}
+.user{
+  color:var(--text-color);
+  align-items: center;
+ display: flex;
+ gap: 1rem;
+font-size: 1.5rem;
+
+}
+.user-icon{
+cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+.user{
+  display: none;
+}
+.header{
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+.header .search-box{
+  width: 70%;
+}
+}
