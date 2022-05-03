@@ -1,0 +1,31 @@
+.footer{
+  display: none;
+}
+@media screen and (max-width: 768px) {
+.footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+z-index:1;
+position: fixed;
+bottom: 0;
+background-color: var(--bg-color1);
+height: 4rem;
+padding: 1rem;
+width: 100%;
+}
+.footer-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+padding: 5px;
+}
+.footer-item:hover{
+  background-color: var(--color-hover);
+}
+.footer-icon{
+  font-size: 1.2rem;
+}
+}
