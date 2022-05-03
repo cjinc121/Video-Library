@@ -1,0 +1,11 @@
+.video-display-vertical{
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 4rem;
+  background-color: var(--bg-color1);
+  width: 100%;
+  min-height: 100%;
+  padding: 1rem;
+  justify-content: space-evenly;
+}

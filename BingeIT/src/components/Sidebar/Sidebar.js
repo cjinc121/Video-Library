@@ -3,10 +3,12 @@ import { AiFillHome, AiOutlineHistory, AiFillLike } from "react-icons/ai";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { MdOutlineWatchLater } from "react-icons/md";
 import "./Sidebar.css";
+import { useNavigate } from "react-router-dom";
 function Sidebar() {
+  const navigate = useNavigate();
   return (
     <ul className="sidebar">
-      <li className="sidebar-item">
+      <li className="sidebar-item" onClick={() => navigate("/")}>
         <AiFillHome className="sidebar-icon" />
         <div className="sidebar-item-name">Home</div>
       </li>

@@ -5,6 +5,7 @@ import { Homepage } from "./pages/Homepage/Homepage";
 import { Header } from "./components/Header/Header";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import { Footer } from "./components/Footer/Footer";
+import { VideoPage } from "./pages/VideoPage/VideoPage";
 function App() {
   return (
     <div className="App">
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/mockman" element={<Mockman />} />
             <Route path="/" element={<Homepage />} />
+            <Route path="/video/:videoid" element={<VideoPage />} />
           </Routes>
         </div>
       </main>
