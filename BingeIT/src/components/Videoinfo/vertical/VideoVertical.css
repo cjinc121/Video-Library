@@ -26,9 +26,9 @@ font-size: 12px;
 color: var(--text-color);
 
 }
-.video-details{
+.video-vertical-card>.video-details{
   display: flex;
-flex-direction: column;
+  justify-content: space-between;
 }
 .video-details h4{
   

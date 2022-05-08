@@ -4,9 +4,31 @@ import { BsX, BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { MdWatchLater } from "react-icons/md";
 import { RiPlayListAddLine } from "react-icons/ri";
+import { useVideo } from "../../context/video-context";
+import { useAuth } from "../../context/auth-context";
+import { useNavigate } from "react-router-dom";
+import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
 function VideoCard({ video }) {
+  const { videoDispatch, videoState } = useVideo();
+  const { authState } = useAuth();
+  const { isUserLoggedIn } = authState;
+  const navigate = useNavigate();
   return (
     <>
+      {videoState.playlistModal && (
+        <div
+          className="modal-page"
+          onClick={() =>
+            videoDispatch({
+              type: "PLAYLIST_MODAL",
+            })
+          }
+        >
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <CreatePlaylist />
+          </div>
+        </div>
+      )}
       {video && (
         <div className="video-display-container">
           <div className="video-card-container">
@@ -29,7 +51,18 @@ function VideoCard({ video }) {
             </div>
             <div className="video-icons">
               <AiFillLike className="icon" />
-              <RiPlayListAddLine className="icon" />
+              <RiPlayListAddLine
+                className="icon"
+                onClick={() => {
+                  if (isUserLoggedIn) {
+                    videoDispatch({ type: "PLAYLIST_MODAL" });
+                    videoDispatch({
+                      type: "VIDEO_TO_BE_ADDED",
+                      payload: video,
+                    });
+                  } else navigate("/login");
+                }}
+              />
               <MdWatchLater className="icon" />
             </div>
           </div>

@@ -102,6 +102,7 @@ function CreatePlaylist() {
               <div className="playlist-display-container" key={playlist._id}>
                 <label>
                   <input
+                    className="checkbox"
                     checked={isChecked(playlist.videos, videoTobeAdded._id)}
                     type="checkbox"
                     onChange={(e) => {
