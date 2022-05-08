@@ -5,7 +5,8 @@ import { useVideo } from "../../context/video-context";
 
 function VideoPage() {
   const { videoid } = useParams();
-  const { video } = useVideo();
+  const { videoState } = useVideo();
+  const { video } = videoState;
   const newVideo = video.find((vid) => vid._id === videoid);
 
   return (

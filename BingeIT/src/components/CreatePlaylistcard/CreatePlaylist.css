@@ -1,0 +1,29 @@
+.playlist-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.playlist-display-container label{
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.playlist-input>input{
+  font-size: 1.2rem;
+  padding: 8px;
+}
+.checkbox{
+  transform: scale(2);
+}
+.playlist-input{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+}
+.playlist-display-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+}

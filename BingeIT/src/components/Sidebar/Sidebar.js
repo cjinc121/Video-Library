@@ -12,7 +12,7 @@ function Sidebar() {
         <AiFillHome className="sidebar-icon" />
         <div className="sidebar-item-name">Home</div>
       </li>
-      <li className="sidebar-item">
+      <li className="sidebar-item" onClick={() => navigate("/playlist")}>
         <RiPlayList2Fill className="sidebar-icon" />
         <div className="sidebar-item-name">Playlist</div>
       </li>
