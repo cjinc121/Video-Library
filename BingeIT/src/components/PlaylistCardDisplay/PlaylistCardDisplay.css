@@ -1,0 +1,23 @@
+.page-info{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.page-info h4{
+  font-size: 1.3rem;
+  font-weight: 200;
+}
+.playlist{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+ 
+}
+
+.playlist-display{
+  background-color: var(--bg-color1);
+min-height: 100%; 
+}

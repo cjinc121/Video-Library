@@ -21,6 +21,7 @@ width: 100%;
   align-items: center;
   gap: 5px;
 padding: 5px;
+cursor: pointer;
 }
 .footer-item:hover{
   background-color: var(--color-hover);

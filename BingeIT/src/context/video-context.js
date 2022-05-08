@@ -1,18 +1,21 @@
 import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
-
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { videoInitialState, videoReducer } from "../reducer/videoReducer";
 const VideoContext = createContext();
 const useVideo = () => useContext(VideoContext);
 const VideoContextProvider = ({ children }) => {
-  const [video, setVideo] = useState([]);
+  const [videoState, videoDispatch] = useReducer(
+    videoReducer,
+    videoInitialState
+  );
   useEffect(() => {
     (async () => {
       const res = await axios.get("/api/videos");
-      setVideo(res.data.videos);
+      videoDispatch({ type: "ADD_NEW_VIDEO", payload: res.data.videos });
     })();
   }, []);
   return (
-    <VideoContext.Provider value={{ video, setVideo }}>
+    <VideoContext.Provider value={{ videoState, videoDispatch }}>
       {children}
     </VideoContext.Provider>
   );

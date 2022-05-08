@@ -2,12 +2,12 @@ import { useVideo } from "../../context/video-context";
 import VideoVertical from "../Videoinfo/vertical/VideoVertical";
 import "./VideoDisplayVertical.css";
 function VideoDisplayVertical() {
-  const { video } = useVideo();
-
+  const { videoState } = useVideo();
+  const { video } = videoState;
   return (
     <div className="video-display-vertical">
       {video.map((vid) => {
-        return <VideoVertical video={vid} />;
+        return <VideoVertical video={vid} key={vid._id} />;
       })}
     </div>
   );

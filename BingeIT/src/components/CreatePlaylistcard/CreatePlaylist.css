@@ -1,0 +1,20 @@
+.playlist-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.playlist-display-container label{
+display: flex;
+align-items: center;
+gap: 3px;
+}
+.playlist-input{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.playlist-display-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

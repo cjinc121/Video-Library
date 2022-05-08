@@ -13,7 +13,11 @@ function CategoryBar() {
   return (
     <div className="category-bar">
       {category.map((item) => {
-        return <div className="chips">{item.categoryName}</div>;
+        return (
+          <div className="chips" key={item._id}>
+            {item.categoryName}
+          </div>
+        );
       })}
     </div>
   );
