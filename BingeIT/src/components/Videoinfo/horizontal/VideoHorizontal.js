@@ -7,7 +7,6 @@ import { useAuth } from "../../../context/auth-context";
 import { removeVideoFromPlaylistService } from "../../../services/playlistCalls";
 function VideoHorizontal({ video }) {
   const { playlistId } = useParams();
-  console.log(playlistId);
   const [showDropdown, setShowDropdown] = useState(false);
   const { authDispatch, authState } = useAuth();
   const { tokenVal } = authState;
