@@ -1,5 +1,30 @@
 import axios from "axios";
 
+export const getPlaylistService = async (token) => {
+  try {
+    const res = await axios.get("/api/user/playlists", {
+      headers: {
+        authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getVideoInPlaylistService = async (id, token) => {
+  try {
+    const res = await axios.get(`/api/user/playlists/${id}`, {
+      headers: {
+        authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const createNewPlaylistService = async (playlistData, token) => {
   try {
     const res = await axios.post(

@@ -1,0 +1,37 @@
+.history-container{
+  padding: 2rem;
+  background-color: var(--bg-color1);
+  min-height: 100%;
+}
+.page-info{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.clear-button{
+  padding: 5px;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin-left: auto;
+
+}
+.page-info h4{
+  font-size: 1.3rem;
+  font-weight: 200;
+}
+.history-container h3 {
+  text-align: center;
+  color: var(--text-color2);
+margin-top: 5rem;
+font-size: 1.5rem;
+font-weight: 200;
+
+}
+.history-videos{
+  display: flex;
+flex-direction: column;
+background-color: var(--hover-color);
+border-radius: 1rem;
+}

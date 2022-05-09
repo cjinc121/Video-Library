@@ -10,9 +10,19 @@ import { useNavigate } from "react-router-dom";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
 function VideoCard({ video }) {
   const { videoDispatch, videoState } = useVideo();
-  const { authState } = useAuth();
+  const {
+    authState,
+    addVideoToWatchLaterHandler,
+    removeVideoFromWatchLaterHandler,
+    removeVideoFromLikesHandler,
+    addVideoToLikesHandler,
+  } = useAuth();
   const { isUserLoggedIn } = authState;
   const navigate = useNavigate();
+  const isPresent = (id, array) => {
+    if (array.find((item) => item._id === id)) return true;
+    else return false;
+  };
   return (
     <>
       {videoState.playlistModal && (
@@ -50,7 +60,17 @@ function VideoCard({ video }) {
               </p>
             </div>
             <div className="video-icons">
-              <AiFillLike className="icon" />
+              {isPresent(video._id, authState.likes) ? (
+                <AiFillLike
+                  className="icon active"
+                  onClick={() => removeVideoFromLikesHandler(video._id)}
+                />
+              ) : (
+                <AiFillLike
+                  className="icon"
+                  onClick={() => addVideoToLikesHandler(video)}
+                />
+              )}
               <RiPlayListAddLine
                 className="icon"
                 onClick={() => {
@@ -63,7 +83,17 @@ function VideoCard({ video }) {
                   } else navigate("/login");
                 }}
               />
-              <MdWatchLater className="icon" />
+              {isPresent(video._id, authState.watchlater) ? (
+                <MdWatchLater
+                  className="icon active"
+                  onClick={() => removeVideoFromWatchLaterHandler(video._id)}
+                />
+              ) : (
+                <MdWatchLater
+                  className="icon"
+                  onClick={() => addVideoToWatchLaterHandler(video)}
+                />
+              )}
             </div>
           </div>
           <div className="comment-box">

@@ -5,12 +5,27 @@ const authInitialState = {
   tokenVal: token,
   user: {},
   playlists: [],
-  watchlsater: [],
+  watchlater: [],
   history: [],
   likes: [],
 };
 const authReducer = (state, action) => {
   switch (action.type) {
+    case "UPDATE_LIKES":
+      return { ...state, likes: action.payload };
+    case "UPDATE_WATCHLATER":
+      return { ...state, watchlater: action.payload };
+    case "UPDATE_HISTORY":
+      return { ...state, history: action.payload };
+    case "UPDATE_PLAYLISTS":
+      return { ...state, playlists: action.payload };
+    case "UPDATE_PLAYLIST":
+      return {
+        ...state,
+        playlists: state.playlists.map((playlist) =>
+          playlist._id === action.payload._id ? action.payload : playlist
+        ),
+      };
     case "CREATE_NEW_PLAYLIST":
       return {
         ...state,
