@@ -31,7 +31,7 @@ function Header() {
       )}
       {isUserLoggedIn && (
         <div className="user">
-          <h4>Hi {authState.user.firstName}</h4>
+          {authState.user.firstName && <h4>Hi {authState.user.firstName}</h4>}
           <FaUserCircle
             className="user-icon"
             onClick={() => navigate("/profile")}

@@ -2,42 +2,46 @@ import React, { useState } from "react";
 import "./VideoHorizontal.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { CgPlayListRemove } from "react-icons/cg";
+import { MdWatchLater } from "react-icons/md";
+import { AiFillLike } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../context/auth-context";
-import { removeVideoFromPlaylistService } from "../../../services/playlistCalls";
 function VideoHorizontal({ video }) {
   const { playlistId } = useParams();
   const [showDropdown, setShowDropdown] = useState(false);
-  const { authDispatch, authState } = useAuth();
-  const { tokenVal } = authState;
+  const {
+    authState,
+    deleteVideoFromPlaylistHandler,
+    addVideoToWatchLaterHandler,
+    removeVideoFromWatchLaterHandler,
+    addVideoToHistoryHandler,
+  } = useAuth();
   const navigate = useNavigate();
-  const deleteVideoFromPlaylistHandler = async (id, videoId) => {
-    try {
-      const { data, status } = await removeVideoFromPlaylistService(
-        id,
-        videoId,
-        tokenVal
-      );
-      if (status === 200)
-        authDispatch({
-          type: "DELETE_VIDEO_FROM_PLAYLIST",
-          payload: data.playlist,
-        });
-    } catch (err) {
-      console.log(err);
-    }
+  const isPresent = (id, array) => {
+    if (array.find((item) => item._id === id)) return true;
+    else return false;
   };
   return (
     <>
       <div
-        onClick={() => navigate(`/video/${video._id}`)}
+        onClick={() => {
+          navigate(`/video/${video._id}`);
+          addVideoToHistoryHandler(video);
+        }}
         className="image-container"
       >
         <img src={video.thumbnail} alt="thumbnail" />
         <span>{video.duration}</span>
       </div>
       <div className="video-details">
-        <h4 onClick={() => navigate(`/video/${video._id}`)}>{video.title}</h4>
+        <h4
+          onClick={() => {
+            navigate(`/video/${video._id}`);
+            addVideoToHistoryHandler(video);
+          }}
+        >
+          {video.title}
+        </h4>
         <p>
           {video.creator} &#9734; {video.views}
         </p>
@@ -55,10 +59,40 @@ function VideoHorizontal({ video }) {
               Delete Video From Playlist
               <CgPlayListRemove className="dropdown-icon" />
             </button>
-            {/* <button className="dropdown-button">
-              Add to watch Later
-              <MdWatchLater className="dropdown-icon" />
-            </button> */}
+            {isPresent(video._id, authState.watchlater) ? (
+              <button
+                className="dropdown-button"
+                onClick={() => removeVideoFromWatchLaterHandler(video._id)}
+              >
+                Remove From Watch Later
+                <MdWatchLater className="dropdown-icon" />
+              </button>
+            ) : (
+              <button
+                className="dropdown-button"
+                onClick={() => addVideoToWatchLaterHandler(video)}
+              >
+                Add to watch Later
+                <MdWatchLater className="dropdown-icon" />
+              </button>
+            )}
+            {isPresent(video._id, authState.likes) ? (
+              <button
+                className="dropdown-button"
+                onClick={() => removeVideoFromLikesHandler(video._id)}
+              >
+                Remove From Liked Videos
+                <AiFillLike className="dropdown-icon" />
+              </button>
+            ) : (
+              <button
+                className="dropdown-button"
+                onClick={() => addVideoToLikesHandler(video)}
+              >
+                Add to Liked Videos
+                <AiFillLike className="dropdown-icon" />
+              </button>
+            )}
           </div>
         )}
       </div>

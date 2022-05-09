@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { VideoDisplayHorizontal } from "../../components/VideoDisplay/VideoDisplayHorizontal";
 import { useAuth } from "../../context/auth-context";
 
 function PlaylistPage() {
   const { playlistId } = useParams();
-  const { authState } = useAuth();
+  const { authState, getVideoInPlaylistHandler } = useAuth();
+  useEffect(() => {
+    (async () => getVideoInPlaylistHandler(playlistId))();
+  }, []);
   const playlist = authState.playlists.filter(
     (playlist) => playlist._id === playlistId
   );

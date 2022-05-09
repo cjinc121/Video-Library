@@ -11,6 +11,11 @@ import { Profile } from "./pages/AuthPage/Profile";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { Playlists } from "./pages/PlaylistsPage/PlaylistsPage";
 import PlaylistPage from "./pages/PlaylistPage/PlaylistPage";
+import Errorpage from "./pages/Errorpage";
+import { WatchLater } from "./pages/WatchLater/WatchLater";
+import { LikesPage } from "./pages/LikesPage/LikesPage";
+import { HistoryPage } from "./pages/History/HistoryPage";
+import SignUpPage from "./pages/AuthPage/SignUpPage";
 function App() {
   return (
     <div className="App">
@@ -24,6 +29,8 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/video/:videoid" element={<VideoPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="*" element={<Errorpage />} />
             <Route
               path="/playlist"
               element={<PrivateRoute navigateTo={<Playlists />}></PrivateRoute>}
@@ -32,6 +39,22 @@ function App() {
               path={`/playlist/:playlistId`}
               element={
                 <PrivateRoute navigateTo={<PlaylistPage />}></PrivateRoute>
+              }
+            />
+            <Route
+              path="/watchlater"
+              element={
+                <PrivateRoute navigateTo={<WatchLater />}></PrivateRoute>
+              }
+            />
+            <Route
+              path="/likes"
+              element={<PrivateRoute navigateTo={<LikesPage />}></PrivateRoute>}
+            />
+            <Route
+              path="/history"
+              element={
+                <PrivateRoute navigateTo={<HistoryPage />}></PrivateRoute>
               }
             />
             <Route

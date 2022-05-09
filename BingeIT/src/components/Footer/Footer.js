@@ -19,7 +19,7 @@ const Footer = () => {
         <RiPlayList2Fill className="footer-icon" />
         <div className="footer-item-name">Playlist</div>
       </li>
-      <li className="footer-item">
+      <li className="footer-item" onClick={() => navigate("/likes")}>
         <AiFillLike className="footer-icon" />
         <div className="footer-item-name">Liked Videos</div>
       </li>

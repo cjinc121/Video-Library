@@ -16,15 +16,15 @@ function Sidebar() {
         <RiPlayList2Fill className="sidebar-icon" />
         <div className="sidebar-item-name">Playlist</div>
       </li>
-      <li className="sidebar-item">
+      <li className="sidebar-item" onClick={() => navigate("/likes")}>
         <AiFillLike className="sidebar-icon" />
         <div className="sidebar-item-name">Liked Videos</div>
       </li>
-      <li className="sidebar-item">
+      <li className="sidebar-item" onClick={() => navigate("/watchlater")}>
         <MdOutlineWatchLater className="sidebar-icon" />
         <div className="sidebar-item-name">Watch later</div>
       </li>
-      <li className="sidebar-item">
+      <li className="sidebar-item" onClick={() => navigate("/history")}>
         <AiOutlineHistory className="sidebar-icon" />
         <div className="sidebar-item-name">History</div>
       </li>

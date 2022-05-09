@@ -8,10 +8,12 @@ const Profile = () => {
       <div className="login-form">
         <h3>BingeIT</h3>
 
-        <h4>
-          {" "}
-          Name: {authState.user.firstName} {authState.user.lastName}
-        </h4>
+        {authState.user.firstName && (
+          <h4>
+            {" "}
+            Name: {authState.user.firstName} {authState.user.lastName}
+          </h4>
+        )}
         <p>Email: {authState.user.email}</p>
         <button onClick={() => signOutHandler()}>Sign Out</button>
       </div>

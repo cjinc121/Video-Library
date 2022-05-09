@@ -29,6 +29,9 @@
   justify-content: space-evenly;
   font-size: 2rem;
 }
+.video-icons>.active{
+  color: var(--warn-color);
+}
 .icon{
   cursor: pointer;
 }
