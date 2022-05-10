@@ -12,9 +12,13 @@ function VideoDisplayVertical() {
   const filterVideo = searchFilter(searchInput, categoryVideo);
   return (
     <div className="video-display-vertical">
-      {filterVideo.map((vid) => {
-        return <VideoVertical video={vid} key={vid._id} />;
-      })}
+      {filterVideo.length > 0 ? (
+        filterVideo.map((vid) => {
+          return <VideoVertical video={vid} key={vid._id} />;
+        })
+      ) : (
+        <h3>Try a better search</h3>
+      )}
     </div>
   );
 }
