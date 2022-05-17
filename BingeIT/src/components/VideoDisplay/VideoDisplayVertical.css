@@ -9,3 +9,9 @@
   padding: 1rem;
   justify-content: space-evenly;
 }
+.video-display-vertical>h3{
+  text-align: center;
+    color: white;
+    margin: auto;
+    font-weight: 200;
+}

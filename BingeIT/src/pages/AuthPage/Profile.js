@@ -14,7 +14,7 @@ const Profile = () => {
             Name: {authState.user.firstName} {authState.user.lastName}
           </h4>
         )}
-        <p>Email: {authState.user.email}</p>
+        {authState.user.email && <p>Email: {authState.user.email}</p>}
         <button onClick={() => signOutHandler()}>Sign Out</button>
       </div>
     </div>
