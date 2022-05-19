@@ -11,7 +11,7 @@ function VideoPage() {
 
   return (
     <div>
-      <VideoCard video={newVideo} />
+      <VideoCard onevideo={newVideo} />
     </div>
   );
 }

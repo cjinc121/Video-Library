@@ -1,6 +1,5 @@
 import React from "react";
 import "./VideoCard.css";
-import { BsX, BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { MdWatchLater } from "react-icons/md";
 import { RiPlayListAddLine } from "react-icons/ri";
@@ -8,8 +7,14 @@ import { useVideo } from "../../context/video-context";
 import { useAuth } from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
-function VideoCard({ video }) {
+import VideoVertical from "../Videoinfo/vertical/VideoVertical";
+function VideoCard({ onevideo }) {
   const { videoDispatch, videoState } = useVideo();
+  const { video } = videoState;
+  const suggested = video.filter(
+    (vid) => vid.category === onevideo.category && vid._id !== onevideo._id
+  );
+
   const {
     authState,
     addVideoToWatchLaterHandler,
@@ -46,7 +51,7 @@ function VideoCard({ video }) {
               <iframe
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/${video._id}`}
+                src={`https://www.youtube.com/embed/${onevideo._id}`}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -54,17 +59,18 @@ function VideoCard({ video }) {
               ></iframe>
             </div>
             <div className="video-details">
-              <h3>{video.title}</h3>
+              <h3>{onevideo.title}</h3>
               <p>
-                {video.creator} &#166;&#166; {video.views}K
+                {onevideo.creator} &#166;&#166; {onevideo.views}K
               </p>
             </div>
             <div className="video-icons">
-              {isPresent(video._id, authState.likes) ? (
+              {isPresent(onevideo._id, authState.likes) ? (
                 <AiFillLike
                   className="icon active"
                   onClick={() => {
-                    if (isUserLoggedIn) removeVideoFromLikesHandler(video._id);
+                    if (isUserLoggedIn)
+                      removeVideoFromLikesHandler(onevideo._id);
                     else navigate("/login");
                   }}
                 />
@@ -72,7 +78,7 @@ function VideoCard({ video }) {
                 <AiFillLike
                   className="icon"
                   onClick={() => {
-                    if (isUserLoggedIn) addVideoToLikesHandler(video);
+                    if (isUserLoggedIn) addVideoToLikesHandler(onevideo);
                     else navigate("/login");
                   }}
                 />
@@ -84,17 +90,17 @@ function VideoCard({ video }) {
                     videoDispatch({ type: "PLAYLIST_MODAL" });
                     videoDispatch({
                       type: "VIDEO_TO_BE_ADDED",
-                      payload: video,
+                      payload: onevideo,
                     });
                   } else navigate("/login");
                 }}
               />
-              {isPresent(video._id, authState.watchlater) ? (
+              {isPresent(onevideo._id, authState.watchlater) ? (
                 <MdWatchLater
                   className="icon active"
                   onClick={() => {
                     if (isUserLoggedIn)
-                      removeVideoFromWatchLaterHandler(video._id);
+                      removeVideoFromWatchLaterHandler(onevideo._id);
                     else navigate("/login");
                   }}
                 />
@@ -102,53 +108,19 @@ function VideoCard({ video }) {
                 <MdWatchLater
                   className="icon"
                   onClick={() => {
-                    if (isUserLoggedIn) addVideoToWatchLaterHandler(video);
+                    if (isUserLoggedIn) addVideoToWatchLaterHandler(onevideo);
                     else navigate("/login");
                   }}
                 />
               )}
             </div>
           </div>
-          <div className="comment-box">
-            <div className="comment-display">
-              <div className="comment-old-container">
-                <div className="comment-old">
-                  <div className="username">USERNAME</div>
-                  <div className="comment-old-user">random comment</div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical />
-                </div>
-              </div>
-              <div className="comment-old-container">
-                <div className="comment-old">
-                  <div className="username">USERNAME</div>
-                  <div className="comment-old-user">random comment</div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical />
-                </div>
-              </div>
-              <div className="comment-old-container">
-                <div className="comment-old">
-                  <div className="username">USERNAME</div>
-                  <div className="comment-old-user">random comment</div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical />
-                </div>
-              </div>
-            </div>
-
-            <div className="comment-user">
-              <div className="username">userName</div>
-              <div className="comment-input">
-                <input type="text" placeholder="comment" />
-                <div className="comment-cross">
-                  <BsX />
-                </div>
-                <button>Comment</button>
-              </div>
+          <div className="suggested-box">
+            <div className="suggested-header">Suggested Videos</div>
+            <div className="suggested-display">
+              {suggested.map((video) => (
+                <VideoVertical video={video} />
+              ))}
             </div>
           </div>
         </div>
