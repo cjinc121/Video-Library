@@ -43,7 +43,7 @@ function VideoHorizontal({ video }) {
           {video.title}
         </h4>
         <p>
-          {video.creator} &#9734; {video.views}
+          {video.creator} &#9734; {video.views}K
         </p>
       </div>
       <div className="dropdown-action-button">

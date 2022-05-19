@@ -8,7 +8,9 @@ function VideoPage() {
   const { videoState } = useVideo();
   const { video } = videoState;
   const newVideo = video.find((vid) => vid._id === videoid);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
       <VideoCard video={newVideo} />

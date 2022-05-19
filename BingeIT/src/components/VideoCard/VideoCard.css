@@ -43,7 +43,7 @@
   align-items: center;
 }
 .suggested-header{
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .suggested-display{
   display: flex;
@@ -76,7 +76,7 @@ padding: 1rem;
 }
 .suggested-box{
   width: 100%;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 1rem;
 }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./VideoCard.css";
 import { AiFillLike } from "react-icons/ai";
 import { MdWatchLater } from "react-icons/md";
@@ -7,8 +7,12 @@ import { useVideo } from "../../context/video-context";
 import { useAuth } from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
+import VideoVertical from "../Videoinfo/vertical/VideoVertical";
 function VideoCard({ video }) {
   const { videoDispatch, videoState } = useVideo();
+  const suggestedVideo = videoState.video.filter(
+    (vid) => vid.category === video.category && vid._id !== video._id
+  );
   const {
     authState,
     addVideoToWatchLaterHandler,
@@ -22,6 +26,9 @@ function VideoCard({ video }) {
     if (array.find((item) => item._id === id)) return true;
     else return false;
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       {videoState.playlistModal && (
@@ -110,7 +117,11 @@ function VideoCard({ video }) {
           </div>
           <div className="suggested-box">
             <div className="suggested-header">Suggested Videos</div>
-            <div className="suggested-display"></div>
+            <div className="suggested-display">
+              {suggestedVideo.map((video) => (
+                <VideoVertical video={video} />
+              ))}
+            </div>
           </div>
         </div>
       )}
