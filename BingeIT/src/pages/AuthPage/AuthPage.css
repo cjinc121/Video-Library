@@ -1,7 +1,7 @@
 .login-container{
   width: 25rem;
   margin:auto;
-  margin-top: 20%;
+  margin-top: 10%;
   display: flex;
   flex-direction: column;
   background-color: var(--bg-color1);
@@ -39,4 +39,10 @@
 .link {
   color: var(--warn-color);
   cursor: pointer;
+}
+@media screen and (max-width: 768px) 
+{
+  .login-container{
+  width: 90%;
+  }
 }
