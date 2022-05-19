@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
 import "./AuthPage.css";
@@ -10,6 +10,9 @@ const LoginPage = () => {
     email: "adarshbalika@gmail.com",
     password: "adarshBalika123",
   };
+  useEffect(() => {
+    window.scrollTo(0, 500);
+  }, []);
   return (
     <div className="login-container">
       <div className="login-form">

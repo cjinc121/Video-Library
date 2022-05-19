@@ -6,7 +6,7 @@ function LikesDisplay({ videos }) {
     <div className="likes-container">
       <div className="page-info">
         <h4>Liked Videos</h4>
-        &#9734;
+        &#166;&#166;
         <p>{videos.length} Video</p>
       </div>
       {videos.length === 0 ? (

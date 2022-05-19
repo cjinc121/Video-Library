@@ -6,7 +6,7 @@ function PlaylistsCardDisplay({ playlists }) {
     <div className="playlist-display">
       <div className="page-info">
         <h4>Playlists</h4>
-        &#9734;
+        &#166;&#166;
         <p>
           {playlists.length} {playlists.length > 1 ? "Playlists" : "Playlist"}
         </p>

@@ -8,7 +8,7 @@ function HistoryDisplay({ videos }) {
     <div className="history-container">
       <div className="page-info">
         <h4>History</h4>
-        &#9734;
+        &#166;&#166;
         <p>{videos.length} Video</p>
         <button
           className="clear-button"
