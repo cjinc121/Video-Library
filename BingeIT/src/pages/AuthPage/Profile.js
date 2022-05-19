@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { useAuth } from "../../context/auth-context";
 
 const Profile = () => {
   const { signOutHandler, authState } = useAuth();
-
+  useEffect(() => {
+    window.scrollTo(0, 500);
+  }, []);
   return (
     <div className="login-container">
       <div className="login-form">

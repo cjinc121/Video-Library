@@ -56,19 +56,25 @@ function VideoCard({ video }) {
             <div className="video-details">
               <h3>{video.title}</h3>
               <p>
-                {video.creator} &#9734; {video.views}K
+                {video.creator} &#166;&#166; {video.views}K
               </p>
             </div>
             <div className="video-icons">
               {isPresent(video._id, authState.likes) ? (
                 <AiFillLike
                   className="icon active"
-                  onClick={() => removeVideoFromLikesHandler(video._id)}
+                  onClick={() => {
+                    if (isUserLoggedIn) removeVideoFromLikesHandler(video._id);
+                    else navigate("/login");
+                  }}
                 />
               ) : (
                 <AiFillLike
                   className="icon"
-                  onClick={() => addVideoToLikesHandler(video)}
+                  onClick={() => {
+                    if (isUserLoggedIn) addVideoToLikesHandler(video);
+                    else navigate("/login");
+                  }}
                 />
               )}
               <RiPlayListAddLine
@@ -86,12 +92,19 @@ function VideoCard({ video }) {
               {isPresent(video._id, authState.watchlater) ? (
                 <MdWatchLater
                   className="icon active"
-                  onClick={() => removeVideoFromWatchLaterHandler(video._id)}
+                  onClick={() => {
+                    if (isUserLoggedIn)
+                      removeVideoFromWatchLaterHandler(video._id);
+                    else navigate("/login");
+                  }}
                 />
               ) : (
                 <MdWatchLater
                   className="icon"
-                  onClick={() => addVideoToWatchLaterHandler(video)}
+                  onClick={() => {
+                    if (isUserLoggedIn) addVideoToWatchLaterHandler(video);
+                    else navigate("/login");
+                  }}
                 />
               )}
             </div>

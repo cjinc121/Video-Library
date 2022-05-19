@@ -8,6 +8,9 @@ function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signUpHandler } = useAuth();
+  useEffect(() => {
+    window.scrollTo(0, 500);
+  }, []);
   return (
     <div className="login-container">
       <div className="login-form">

@@ -26,8 +26,8 @@
   display: flex;
   padding: 1rem;
   gap: 2rem;
-  justify-content: space-evenly;
-  font-size: 2rem;
+  justify-content: flex-end;
+  font-size: 1.5rem;
 }
 .video-icons>.active{
   color: var(--warn-color);
