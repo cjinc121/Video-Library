@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { VideoDisplayHorizontal } from "../../components/VideoDisplay/VideoDisplayHorizontal";
-import { useAuth } from "../../context/auth-context";
+import { getAuth, getVideoInPlaylist } from "../../features/auth/authSlice";
 
 function PlaylistPage() {
   const { playlistId } = useParams();
-  const { authState, getVideoInPlaylistHandler } = useAuth();
+  const authState = useSelector(getAuth);
+  const dispatch = useDispatch();
+  const { tokenVal } = authState;
+  const getVideoInPlaylistHandler = (id) => {
+    dispatch(getVideoInPlaylist({ id, tokenVal }));
+  };
   useEffect(() => {
     (async () => getVideoInPlaylistHandler(playlistId))();
   }, []);

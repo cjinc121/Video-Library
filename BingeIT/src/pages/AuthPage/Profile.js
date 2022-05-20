@@ -1,10 +1,19 @@
 import { useEffect } from "react";
-import { useAuth } from "../../context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { endSession, getAuth } from "../../features/auth/authSlice";
 
 const Profile = () => {
-  const { signOutHandler, authState } = useAuth();
+  const authState = useSelector(getAuth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const signOutHandler = () => {
+    localStorage.removeItem("token");
+    dispatch(endSession());
+    navigate("/login");
+  };
   useEffect(() => {
-    window.scrollTo(0, 500);
+    window.scrollTo(0, 0);
   }, []);
   return (
     <div className="login-container">

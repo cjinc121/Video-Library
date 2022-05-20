@@ -1,8 +1,15 @@
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { PlaylistsCardDisplay } from "../../components/PlaylistCardDisplay/PlaylistsCardDisplay";
-import { useAuth } from "../../context/auth-context";
+import { getAuth, getPlaylist } from "../../features/auth/authSlice";
+
 const Playlists = () => {
-  const { authState, getPlaylistHandler } = useAuth();
+  const authState = useSelector(getAuth);
+  const dispatch = useDispatch();
+  const { tokenVal } = authState;
+  const getPlaylistHandler = () => {
+    dispatch(getPlaylist({ tokenVal }));
+  };
   useEffect(() => {
     (async () => getPlaylistHandler())();
   }, []);

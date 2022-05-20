@@ -1,29 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth-context";
-import { useVideo } from "../../context/video-context";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdPlaylistAdd, MdWatchLater } from "react-icons/md";
 import "./WatchLaterCard.css";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
-import { addVideoToHistoryServices } from "../../services/historyCalls";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getVideo,
+  playlistModal,
+  videoTobeAdded,
+} from "../../features/video/videoSlice";
+import { getAuth } from "../../features/auth/authSlice";
 function WatchLaterCard({ video }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { videoState, videoDispatch } = useVideo();
+  const videoState = useSelector(getVideo);
+  const authState = useSelector(getAuth);
+  const { tokenVal } = authState;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { removeVideoFromWatchLaterHandler, addVideoToHistoryHandler } =
-    useAuth();
 
+  const removeVideoFromWatchLaterHandler = async (id) => {
+    dispatch(removeVideoFromWatchLater({ id, tokenVal }));
+  };
+  const addVideoToHistoryHandler = (video) => {
+    dispatch(addVideoToHistory({ video, tokenVal }));
+  };
   return (
     <>
       {videoState.playlistModal && (
         <div
           className="modal-page"
-          onClick={() =>
-            videoDispatch({
-              type: "PLAYLIST_MODAL",
-            })
-          }
+          onClick={() => {
+            dispatch(playlistModal());
+          }}
         >
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <CreatePlaylist />
@@ -61,11 +70,8 @@ function WatchLaterCard({ video }) {
               <button
                 className="dropdown-button"
                 onClick={() => {
-                  videoDispatch({ type: "PLAYLIST_MODAL" });
-                  videoDispatch({
-                    type: "VIDEO_TO_BE_ADDED",
-                    payload: video,
-                  });
+                  dispatch(playlistModal());
+                  dispatch(videoTobeAdded(video));
                 }}
               >
                 Add Video To Playlist

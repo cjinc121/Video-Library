@@ -4,10 +4,11 @@ import { AiFillHome, AiFillLike } from "react-icons/ai";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth-context";
+import { useSelector } from "react-redux";
+import { getAuth } from "../../features/auth/authSlice";
 const Footer = () => {
   const navigate = useNavigate();
-  const { authState } = useAuth();
+  const authState = useSelector(getAuth);
   const { isUserLoggedIn } = authState;
   return (
     <div className="footer">

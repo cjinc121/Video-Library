@@ -4,23 +4,44 @@ import { AiFillLike } from "react-icons/ai";
 import { MdWatchLater } from "react-icons/md";
 import { RiPlayListAddLine } from "react-icons/ri";
 import { useVideo } from "../../context/video-context";
-import { useAuth } from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
 import VideoVertical from "../Videoinfo/vertical/VideoVertical";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getVideo,
+  playlistModal,
+  videoTobeAdded,
+} from "../../features/video/videoSlice";
+import {
+  addVideoToLikes,
+  addVideoToWatchLater,
+  getAuth,
+  removeVideoFromLikes,
+  removeVideoFromWatchLater,
+} from "../../features/auth/authSlice";
 function VideoCard({ video }) {
-  const { videoDispatch, videoState } = useVideo();
+  const { videoDispatch } = useVideo();
+  const videoState = useSelector(getVideo);
+  const dispatch = useDispatch();
   const suggestedVideo = videoState.video.filter(
     (vid) => vid.category === video.category && vid._id !== video._id
   );
-  const {
-    authState,
-    addVideoToWatchLaterHandler,
-    removeVideoFromWatchLaterHandler,
-    removeVideoFromLikesHandler,
-    addVideoToLikesHandler,
-  } = useAuth();
-  const { isUserLoggedIn } = authState;
+  const authState = useSelector(getAuth);
+  const { isUserLoggedIn, tokenVal } = authState;
+  const addVideoToWatchLaterHandler = (video) => {
+    dispatch(addVideoToWatchLater({ video, tokenVal }));
+  };
+  const removeVideoFromWatchLaterHandler = (id) => {
+    dispatch(removeVideoFromWatchLater({ id, tokenVal }));
+  };
+  const addVideoToLikesHandler = (video) => {
+    dispatch(addVideoToLikes({ video, tokenVal }));
+  };
+  const removeVideoFromLikesHandler = (id) => {
+    dispatch(removeVideoFromLikes({ id, tokenVal }));
+  };
+
   const navigate = useNavigate();
   const isPresent = (id, array) => {
     if (array.find((item) => item._id === id)) return true;
@@ -87,6 +108,8 @@ function VideoCard({ video }) {
                 className="icon"
                 onClick={() => {
                   if (isUserLoggedIn) {
+                    dispatch(playlistModal());
+                    dispatch(videoTobeAdded(video));
                     videoDispatch({ type: "PLAYLIST_MODAL" });
                     videoDispatch({
                       type: "VIDEO_TO_BE_ADDED",

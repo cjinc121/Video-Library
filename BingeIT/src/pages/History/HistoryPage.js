@@ -1,8 +1,14 @@
 import React, { useEffect } from "react";
-import { useAuth } from "../../context/auth-context";
 import { HistoryDisplay } from "../../components/HistoryDisplay/HistoryDisplay";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuth, getHistory } from "../../features/auth/authSlice";
 function HistoryPage() {
-  const { authState, getHistoryHandler } = useAuth();
+  const authState = useSelector(getAuth);
+  const dispatch = useDispatch();
+  const { tokenVal } = authState;
+  const getHistoryHandler = async () => {
+    dispatch(getHistory({ tokenVal }));
+  };
   useEffect(() => {
     (async () => getHistoryHandler())();
   }, []);

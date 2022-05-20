@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./CategoryBar.css";
-import { useVideo } from "../../context/video-context";
+import { useDispatch } from "react-redux";
+import { changeCategory } from "../../features/video/videoSlice";
 function CategoryBar() {
   const [category, setCategory] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
       const { data } = await axios.get("/api/categories");
       setCategory(data.categories);
     })();
   }, []);
-  const { videoDispatch } = useVideo();
   return (
     <div className="category-bar">
       {category.map((item) => {
@@ -18,12 +19,9 @@ function CategoryBar() {
           <div
             className="chips"
             key={item._id}
-            onClick={() =>
-              videoDispatch({
-                type: "CHANGE_CATEGORY",
-                payload: item.categoryName,
-              })
-            }
+            onClick={() => {
+              dispatch(changeCategory(item.categoryName));
+            }}
           >
             {item.categoryName}
           </div>
