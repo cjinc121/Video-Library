@@ -1,28 +1,55 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./VideoCard.css";
-import { BsX, BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { MdWatchLater } from "react-icons/md";
 import { RiPlayListAddLine } from "react-icons/ri";
 import { useVideo } from "../../context/video-context";
-import { useAuth } from "../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
+import VideoVertical from "../Videoinfo/vertical/VideoVertical";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getVideo,
+  playlistModal,
+  videoTobeAdded,
+} from "../../features/video/videoSlice";
+import {
+  addVideoToLikes,
+  addVideoToWatchLater,
+  getAuth,
+  removeVideoFromLikes,
+  removeVideoFromWatchLater,
+} from "../../features/auth/authSlice";
 function VideoCard({ video }) {
-  const { videoDispatch, videoState } = useVideo();
-  const {
-    authState,
-    addVideoToWatchLaterHandler,
-    removeVideoFromWatchLaterHandler,
-    removeVideoFromLikesHandler,
-    addVideoToLikesHandler,
-  } = useAuth();
-  const { isUserLoggedIn } = authState;
+  const { videoDispatch } = useVideo();
+  const videoState = useSelector(getVideo);
+  const dispatch = useDispatch();
+  const suggestedVideo = videoState.video.filter(
+    (vid) => vid.category === video.category && vid._id !== video._id
+  );
+  const authState = useSelector(getAuth);
+  const { isUserLoggedIn, tokenVal } = authState;
+  const addVideoToWatchLaterHandler = (video) => {
+    dispatch(addVideoToWatchLater({ video, tokenVal }));
+  };
+  const removeVideoFromWatchLaterHandler = (id) => {
+    dispatch(removeVideoFromWatchLater({ id, tokenVal }));
+  };
+  const addVideoToLikesHandler = (video) => {
+    dispatch(addVideoToLikes({ video, tokenVal }));
+  };
+  const removeVideoFromLikesHandler = (id) => {
+    dispatch(removeVideoFromLikes({ id, tokenVal }));
+  };
+
   const navigate = useNavigate();
   const isPresent = (id, array) => {
     if (array.find((item) => item._id === id)) return true;
     else return false;
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       {videoState.playlistModal && (
@@ -56,25 +83,33 @@ function VideoCard({ video }) {
             <div className="video-details">
               <h3>{video.title}</h3>
               <p>
-                {video.creator} &#9734; {video.views}K
+                {video.creator} &#166;&#166; {video.views}K
               </p>
             </div>
             <div className="video-icons">
               {isPresent(video._id, authState.likes) ? (
                 <AiFillLike
                   className="icon active"
-                  onClick={() => removeVideoFromLikesHandler(video._id)}
+                  onClick={() => {
+                    if (isUserLoggedIn) removeVideoFromLikesHandler(video._id);
+                    else navigate("/login");
+                  }}
                 />
               ) : (
                 <AiFillLike
                   className="icon"
-                  onClick={() => addVideoToLikesHandler(video)}
+                  onClick={() => {
+                    if (isUserLoggedIn) addVideoToLikesHandler(video);
+                    else navigate("/login");
+                  }}
                 />
               )}
               <RiPlayListAddLine
                 className="icon"
                 onClick={() => {
                   if (isUserLoggedIn) {
+                    dispatch(playlistModal());
+                    dispatch(videoTobeAdded(video));
                     videoDispatch({ type: "PLAYLIST_MODAL" });
                     videoDispatch({
                       type: "VIDEO_TO_BE_ADDED",
@@ -86,56 +121,29 @@ function VideoCard({ video }) {
               {isPresent(video._id, authState.watchlater) ? (
                 <MdWatchLater
                   className="icon active"
-                  onClick={() => removeVideoFromWatchLaterHandler(video._id)}
+                  onClick={() => {
+                    if (isUserLoggedIn)
+                      removeVideoFromWatchLaterHandler(video._id);
+                    else navigate("/login");
+                  }}
                 />
               ) : (
                 <MdWatchLater
                   className="icon"
-                  onClick={() => addVideoToWatchLaterHandler(video)}
+                  onClick={() => {
+                    if (isUserLoggedIn) addVideoToWatchLaterHandler(video);
+                    else navigate("/login");
+                  }}
                 />
               )}
             </div>
           </div>
-          <div className="comment-box">
-            <div className="comment-display">
-              <div className="comment-old-container">
-                <div className="comment-old">
-                  <div className="username">USERNAME</div>
-                  <div className="comment-old-user">random comment</div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical />
-                </div>
-              </div>
-              <div className="comment-old-container">
-                <div className="comment-old">
-                  <div className="username">USERNAME</div>
-                  <div className="comment-old-user">random comment</div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical />
-                </div>
-              </div>
-              <div className="comment-old-container">
-                <div className="comment-old">
-                  <div className="username">USERNAME</div>
-                  <div className="comment-old-user">random comment</div>
-                </div>
-                <div>
-                  <BsThreeDotsVertical />
-                </div>
-              </div>
-            </div>
-
-            <div className="comment-user">
-              <div className="username">userName</div>
-              <div className="comment-input">
-                <input type="text" placeholder="comment" />
-                <div className="comment-cross">
-                  <BsX />
-                </div>
-                <button>Comment</button>
-              </div>
+          <div className="suggested-box">
+            <div className="suggested-header">Suggested Videos</div>
+            <div className="suggested-display">
+              {suggestedVideo.map((video) => (
+                <VideoVertical video={video} />
+              ))}
             </div>
           </div>
         </div>

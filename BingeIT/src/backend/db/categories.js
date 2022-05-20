@@ -12,10 +12,6 @@ export const categories = [
   },
   {
     _id: uuid(),
-    categoryName: "Computer Programming",
-  },
-  {
-    _id: uuid(),
     categoryName: "Frontend Development",
   },
   {
@@ -28,7 +24,7 @@ export const categories = [
   },
   {
     _id: uuid(),
-    categoryName: "Drama",
+    categoryName: "Sitcoms",
   },
   {
     _id: uuid(),

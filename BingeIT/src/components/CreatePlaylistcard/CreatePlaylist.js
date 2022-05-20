@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdDeleteOutline } from "react-icons/md";
-import { useAuth } from "../../context/auth-context";
-import { useVideo } from "../../context/video-context";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  addVideoToPlaylistService,
-  createNewPlaylistService,
-  deletePlaylistService,
-  removeVideoFromPlaylistService,
-} from "../../services/playlistCalls";
+  addVideoToPlaylist,
+  createNewPlaylist,
+  deletePlaylist,
+  deleteVideoFromPlaylist,
+  getAuth,
+} from "../../features/auth/authSlice";
+import { getVideo } from "../../features/video/videoSlice";
+
 import "./CreatePlaylist.css";
 function CreatePlaylist() {
   const [currentPlaylist, setCurrentPlaylist] = useState("");
-  const { authState, authDispatch } = useAuth();
-  const { videoState } = useVideo();
+  const authState = useSelector(getAuth);
+  const dispatch = useDispatch();
+  const videoState = useSelector(getVideo);
   const { videoTobeAdded } = videoState;
 
   const { tokenVal } = authState;
@@ -23,61 +26,18 @@ function CreatePlaylist() {
     return false;
   }
 
-  const createNewPlaylistHandler = async () => {
-    try {
-      const playlistData = { title: currentPlaylist, description: "" };
-      const { data, status } = await createNewPlaylistService(
-        playlistData,
-        tokenVal
-      );
-      if (status === 201) {
-        authDispatch({
-          type: "CREATE_NEW_PLAYLIST",
-          payload: data.playlists,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const createNewPlaylistHandler = () => {
+    const playlistData = { title: currentPlaylist, description: "" };
+    dispatch(createNewPlaylist({ playlistData, tokenVal }));
   };
-  const deletePlaylistHandler = async (id) => {
-    try {
-      const { data, status } = await deletePlaylistService(id, tokenVal);
-      if (status === 200) {
-        authDispatch({ type: "DELETE_PLAYLIST", payload: data.playlists });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const deletePlaylistHandler = (id) => {
+    dispatch(deletePlaylist({ id, tokenVal }));
   };
   const addVideoToPlaylistHandler = async (id, video) => {
-    try {
-      const { data, status } = await addVideoToPlaylistService(
-        id,
-        video,
-        tokenVal
-      );
-      if (status === 201)
-        authDispatch({ type: "ADD_VIDEO_TO_PLAYLIST", payload: data.playlist });
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(addVideoToPlaylist({ id, video, tokenVal }));
   };
-  const deleteVideoFromPlaylistHandler = async (id, videoId) => {
-    try {
-      const { data, status } = await removeVideoFromPlaylistService(
-        id,
-        videoId,
-        tokenVal
-      );
-      if (status === 200)
-        authDispatch({
-          type: "DELETE_VIDEO_FROM_PLAYLIST",
-          payload: data.playlist,
-        });
-    } catch (err) {
-      console.log(err);
-    }
+  const deleteVideoFromPlaylistHandler = (id, videoId) => {
+    dispatch(deleteVideoFromPlaylist({ id, videoId, tokenVal }));
   };
   return (
     <div className="playlist-container">

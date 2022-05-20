@@ -6,8 +6,7 @@ function WatchLaterDisplay({ videos }) {
     <div className="watchlater-container">
       <div className="page-info">
         <h4>Watch Later</h4>
-        &#9734;
-        <p>{videos.length} Video</p>
+        &#166;&#166; <p>{videos.length} Video</p>
       </div>
       {videos.length === 0 ? (
         <h3>There is no video in the List</h3>

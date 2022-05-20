@@ -4,10 +4,11 @@ import { FaUserCircle } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth-context";
-import { useVideo } from "../../context/video-context";
+import { useDispatch } from "react-redux";
+import { search } from "../../features/video/videoSlice";
 function Header() {
   const { authState } = useAuth();
-  const { videoDispatch } = useVideo();
+  const dispatch = useDispatch();
   const { isUserLoggedIn } = authState;
   const navigate = useNavigate();
   const [input, setInput] = useState("");
@@ -23,12 +24,14 @@ function Header() {
           className="search-input"
           onChange={(e) => {
             setInput(e.target.value);
-            videoDispatch({ type: "SEARCH", payload: input });
+            dispatch(search(input));
           }}
         />
         <button
           className="search-button"
-          onClick={() => videoDispatch({ type: "SEARCH", payload: input })}
+          onClick={() => {
+            dispatch(search(input));
+          }}
         >
           <BsSearch className="search-icon" />
         </button>

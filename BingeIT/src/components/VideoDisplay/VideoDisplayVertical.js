@@ -1,12 +1,13 @@
-import { useVideo } from "../../context/video-context";
 import VideoVertical from "../Videoinfo/vertical/VideoVertical";
 import "./VideoDisplayVertical.css";
 import {
   searchFilter,
   categoryFilter,
 } from "../../services/category&searchfilter";
+import { useSelector } from "react-redux";
+import { getVideo } from "../../features/video/videoSlice";
 function VideoDisplayVertical() {
-  const { videoState } = useVideo();
+  const videoState = useSelector(getVideo);
   const { video, category, searchInput } = videoState;
   const categoryVideo = categoryFilter(category, video);
   const filterVideo = searchFilter(searchInput, categoryVideo);

@@ -1,22 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth-context";
-import { useVideo } from "../../context/video-context";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdPlaylistAdd, MdWatchLater } from "react-icons/md";
 import { AiFillLike } from "react-icons/ai";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getVideo,
+  playlistModal,
+  videoTobeAdded,
+} from "../../features/video/videoSlice";
+import {
+  addVideoToWatchLater,
+  getAuth,
+  removeVideoFromLikes,
+  removeVideoFromWatchLater,
+} from "../../features/auth/authSlice";
 function LikesCard({ video }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { videoState, videoDispatch } = useVideo();
+  const videoState = useSelector(getVideo);
+  const authState = useSelector(getAuth);
+  const { tokenVal } = authState;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    authState,
-    addVideoToWatchLaterHandler,
-    removeVideoFromWatchLaterHandler,
-    removeVideoFromLikesHandler,
-    addVideoToHistoryHandler,
-  } = useAuth();
+
+  const addVideoToHistoryHandler = async (video) => {
+    dispatch(addVideoToHistoryHandler({ video, tokenVal }));
+  };
+  const removeVideoFromLikesHandler = (id) => {
+    dispatch(removeVideoFromLikes({ id, tokenVal }));
+  };
+  const removeVideoFromWatchLaterHandler = (id) => {
+    dispatch(removeVideoFromWatchLater({ id, tokenVal }));
+  };
+  const addVideoToWatchLaterHandler = async (video) => {
+    dispatch(addVideoToWatchLater({ video, tokenVal }));
+  };
+
   const isPresent = (id, array) => {
     if (array.find((item) => item._id === id)) return true;
     else return false;
@@ -26,11 +46,9 @@ function LikesCard({ video }) {
       {videoState.playlistModal && (
         <div
           className="modal-page"
-          onClick={() =>
-            videoDispatch({
-              type: "PLAYLIST_MODAL",
-            })
-          }
+          onClick={() => {
+            dispatch(playlistModal());
+          }}
         >
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <CreatePlaylist />
@@ -68,11 +86,8 @@ function LikesCard({ video }) {
               <button
                 className="dropdown-button"
                 onClick={() => {
-                  videoDispatch({ type: "PLAYLIST_MODAL" });
-                  videoDispatch({
-                    type: "VIDEO_TO_BE_ADDED",
-                    payload: video,
-                  });
+                  dispatch(playlistModal());
+                  dispatch(videoTobeAdded(video));
                 }}
               >
                 Add Video To Playlist

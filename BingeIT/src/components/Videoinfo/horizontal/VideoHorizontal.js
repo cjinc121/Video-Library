@@ -5,22 +5,42 @@ import { CgPlayListRemove } from "react-icons/cg";
 import { MdWatchLater } from "react-icons/md";
 import { AiFillLike } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../../context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addVideoToHistory,
+  addVideoToLikes,
+  addVideoToWatchLater,
+  deleteVideoFromPlaylist,
+  getAuth,
+  removeVideoFromWatchLater,
+} from "../../../features/auth/authSlice";
 function VideoHorizontal({ video }) {
   const { playlistId } = useParams();
   const [showDropdown, setShowDropdown] = useState(false);
-  const {
-    authState,
-    deleteVideoFromPlaylistHandler,
-    addVideoToWatchLaterHandler,
-    removeVideoFromWatchLaterHandler,
-    addVideoToHistoryHandler,
-  } = useAuth();
+  const authState = useSelector(getAuth);
+  const { tokenVal } = authState;
+  const dispatch = useDispatch();
+  const addVideoToLikesHandler = (video) => {
+    dispatch(addVideoToLikes({ video, tokenVal }));
+  };
+  const addVideoToHistoryHandler = (video) => {
+    dispatch(addVideoToHistory({ video, tokenVal }));
+  };
+  const removeVideoFromWatchLaterHandler = async (id) => {
+    dispatch(removeVideoFromWatchLater({ id, tokenVal }));
+  };
+  const addVideoToWatchLaterHandler = async (video) => {
+    dispatch(addVideoToWatchLater({ video, tokenVal }));
+  };
+  const deleteVideoFromPlaylistHandler = async (id, videoId) => {
+    dispatch(deleteVideoFromPlaylist({ id, videoId, tokenVal }));
+  };
   const navigate = useNavigate();
   const isPresent = (id, array) => {
     if (array.find((item) => item._id === id)) return true;
     else return false;
   };
+
   return (
     <>
       <div
@@ -43,7 +63,7 @@ function VideoHorizontal({ video }) {
           {video.title}
         </h4>
         <p>
-          {video.creator} &#9734; {video.views}
+          {video.creator} &#9734; {video.views}K
         </p>
       </div>
       <div className="dropdown-action-button">

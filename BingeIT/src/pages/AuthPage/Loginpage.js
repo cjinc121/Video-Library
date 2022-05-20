@@ -1,15 +1,27 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../context/auth-context";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, logIn } from "../../features/auth/authSlice";
 import "./AuthPage.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { logInHandler } = useAuth();
+  const authState = useSelector(getAuth);
+  const dispatch = useDispatch();
   const guestUser = {
     email: "adarshbalika@gmail.com",
     password: "adarshBalika123",
   };
+  const navigate = useNavigate();
+
+  const logInHandler = ({ email, password }) => {
+    dispatch(logIn({ email, password }));
+    navigate("/");
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="login-container">
       <div className="login-form">

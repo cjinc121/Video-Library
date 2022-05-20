@@ -1,23 +1,46 @@
 import React, { useState } from "react";
 import "./VideoVertical.css";
 import { useNavigate } from "react-router-dom";
-import { BsEyeglasses, BsThreeDotsVertical } from "react-icons/bs";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiFillLike } from "react-icons/ai";
 import { MdPlaylistAdd, MdWatchLater } from "react-icons/md";
-import { useVideo } from "../../../context/video-context";
 import { CreatePlaylist } from "../../CreatePlaylistcard/CreatePlaylist";
-import { useAuth } from "../../../context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getVideo,
+  playlistModal,
+  videoTobeAdded,
+} from "../../../features/video/videoSlice";
+import {
+  addVideoToHistory,
+  addVideoToLikes,
+  addVideoToWatchLater,
+  getAuth,
+  removeVideoFromLikes,
+  removeVideoFromWatchLater,
+} from "../../../features/auth/authSlice";
 function VideoVertical({ video }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { videoState, videoDispatch } = useVideo();
-  const {
-    authState,
-    addVideoToWatchLaterHandler,
-    removeVideoFromWatchLaterHandler,
-    removeVideoFromLikesHandler,
-    addVideoToLikesHandler,
-    addVideoToHistoryHandler,
-  } = useAuth();
+  const videoState = useSelector(getVideo);
+  const dispatch = useDispatch();
+  const authState = useSelector(getAuth);
+  const { tokenVal } = authState;
+
+  const addVideoToHistoryHandler = (video) => {
+    dispatch(addVideoToHistory({ video, tokenVal }));
+  };
+  const addVideoToLikesHandler = async (video) => {
+    dispatch(addVideoToLikes({ video, tokenVal }));
+  };
+  const removeVideoFromLikesHandler = async (id) => {
+    dispatch(removeVideoFromLikes({ id, tokenVal }));
+  };
+  const removeVideoFromWatchLaterHandler = async (id) => {
+    dispatch(removeVideoFromWatchLater({ id, tokenVal }));
+  };
+  const addVideoToWatchLaterHandler = async (video) => {
+    dispatch(addVideoToWatchLater({ video, tokenVal }));
+  };
   const { isUserLoggedIn } = authState;
   const navigate = useNavigate();
   const isPresent = (id, array) => {
@@ -29,11 +52,9 @@ function VideoVertical({ video }) {
       {videoState.playlistModal && (
         <div
           className="modal-page"
-          onClick={() =>
-            videoDispatch({
-              type: "PLAYLIST_MODAL",
-            })
-          }
+          onClick={() => {
+            dispatch(playlistModal());
+          }}
         >
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <CreatePlaylist />
@@ -62,7 +83,7 @@ function VideoVertical({ video }) {
               {video.title}
             </h4>
             <p>
-              {video.creator} &#9734; {video.views}K
+              {video.creator} || {video.views}K
             </p>
           </div>
           <div className="dropdown-action-button">
@@ -75,11 +96,8 @@ function VideoVertical({ video }) {
                   className="dropdown-button"
                   onClick={() => {
                     if (isUserLoggedIn) {
-                      videoDispatch({ type: "PLAYLIST_MODAL" });
-                      videoDispatch({
-                        type: "VIDEO_TO_BE_ADDED",
-                        payload: video,
-                      });
+                      dispatch(playlistModal());
+                      dispatch(videoTobeAdded(video));
                     } else navigate("/login");
                   }}
                 >

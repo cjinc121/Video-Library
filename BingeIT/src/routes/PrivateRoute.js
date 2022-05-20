@@ -1,8 +1,9 @@
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/auth-context";
+import { getAuth } from "../features/auth/authSlice";
 
 const PrivateRoute = ({ navigateTo }) => {
-  const { authState } = useAuth();
+  const authState = useSelector(getAuth);
   return authState.isUserLoggedIn ? (
     navigateTo
   ) : (

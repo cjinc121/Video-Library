@@ -5,22 +5,17 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdPlaylistAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import nothing from "../../assets/nothing_thumbnail.width-800.jpg";
-import { deletePlaylistService } from "../../services/playlistCalls";
-import { useAuth } from "../../context/auth-context";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePlaylist, getAuth } from "../../features/auth/authSlice";
+
 function PlaylistCard({ playlist }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { authState, authDispatch } = useAuth();
+  const authState = useSelector(getAuth);
   const { tokenVal } = authState;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const deletePlaylistHandler = async (id) => {
-    try {
-      const { data, status } = await deletePlaylistService(id, tokenVal);
-      if (status === 200) {
-        authDispatch({ type: "DELETE_PLAYLIST", payload: data.playlists });
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const deletePlaylistHandler = (id) => {
+    dispatch(deletePlaylist({ id, tokenVal }));
   };
   return (
     <>
