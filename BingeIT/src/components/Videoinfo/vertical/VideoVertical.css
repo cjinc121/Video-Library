@@ -34,13 +34,14 @@ color: var(--text-color);
   
   width: 100%;
   font-size: 1rem;
-  line-height: 1rem;
+  line-height: 1.5rem;
   font-weight: 500;
 }
-.video-details p{
+.video-details>video-info>p{
   width: 100%;
   font-size: 15px;
-  line-height: 2rem;
+  line-height: 1rem;
+
 }
 .dropdown-action-button{
   position: relative;

@@ -3,11 +3,11 @@ import "./Header.css";
 import { FaUserCircle } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { search } from "../../features/video/videoSlice";
+import { getAuth } from "../../features/auth/authSlice";
 function Header() {
-  const { authState } = useAuth();
+  const authState = useSelector(getAuth);
   const dispatch = useDispatch();
   const { isUserLoggedIn } = authState;
   const navigate = useNavigate();
