@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Navigate } from "react-router-dom";
 import {
   logInHandlerService,
   signUpHandlerService,
@@ -112,7 +111,7 @@ export const removeVideoFromHistory = createAsyncThunk(
 );
 export const removeVideoFromWatchLater = createAsyncThunk(
   "/auth/removeVideoFromWatchLater",
-  async (id, tokenVal) => {
+  async ({ id, tokenVal }) => {
     try {
       const { data } = await removeVideoFromWatchLaterService(id, tokenVal);
       return data.watchlater;
@@ -134,7 +133,7 @@ export const addVideoToHistory = createAsyncThunk(
 );
 export const removeAllVideoFromHistory = createAsyncThunk(
   "/auth/removeAllVideoFromHistory",
-  async (tokenVal) => {
+  async ({ tokenVal }) => {
     try {
       const { data } = await removeAllVideoFromHistoryService(tokenVal);
       return data.history;
@@ -249,9 +248,6 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    clearHistory: (state) => {
-      state.history = [];
-    },
     endSession: (state) => {
       return {
         ...state,

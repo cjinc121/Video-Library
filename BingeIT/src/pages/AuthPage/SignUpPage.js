@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./AuthPage.css";
 import { signUp } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 function SignUpPage() {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");

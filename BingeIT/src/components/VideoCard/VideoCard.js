@@ -3,7 +3,6 @@ import "./VideoCard.css";
 import { AiFillLike } from "react-icons/ai";
 import { MdWatchLater } from "react-icons/md";
 import { RiPlayListAddLine } from "react-icons/ri";
-import { useVideo } from "../../context/video-context";
 import { useNavigate } from "react-router-dom";
 import { CreatePlaylist } from "../CreatePlaylistcard/CreatePlaylist";
 import VideoVertical from "../Videoinfo/vertical/VideoVertical";
@@ -21,7 +20,6 @@ import {
   removeVideoFromWatchLater,
 } from "../../features/auth/authSlice";
 function VideoCard({ video }) {
-  const { videoDispatch } = useVideo();
   const videoState = useSelector(getVideo);
   const dispatch = useDispatch();
   const suggestedVideo = videoState.video.filter(
@@ -53,14 +51,7 @@ function VideoCard({ video }) {
   return (
     <>
       {videoState.playlistModal && (
-        <div
-          className="modal-page"
-          onClick={() =>
-            videoDispatch({
-              type: "PLAYLIST_MODAL",
-            })
-          }
-        >
+        <div className="modal-page" onClick={() => dispatch(playlistModal())}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <CreatePlaylist />
           </div>
@@ -110,11 +101,6 @@ function VideoCard({ video }) {
                   if (isUserLoggedIn) {
                     dispatch(playlistModal());
                     dispatch(videoTobeAdded(video));
-                    videoDispatch({ type: "PLAYLIST_MODAL" });
-                    videoDispatch({
-                      type: "VIDEO_TO_BE_ADDED",
-                      payload: video,
-                    });
                   } else navigate("/login");
                 }}
               />

@@ -1,10 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearHistory,
-  getAuth,
-  removeVideoFromHistory,
-} from "../../features/auth/authSlice";
+import { getAuth, removeVideoFromHistory } from "../../features/auth/authSlice";
 import { HistoryCard } from "../HistoryCard/HistoryCard";
 import "./HistoryDisplay.css";
 function HistoryDisplay({ videos }) {
@@ -13,7 +9,6 @@ function HistoryDisplay({ videos }) {
   const { tokenVal } = authState;
   const removeAllVideoFromHistoryHandler = () => {
     dispatch(removeVideoFromHistory(tokenVal));
-    dispatch(clearHistory());
   };
   return (
     <div className="history-container">

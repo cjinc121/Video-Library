@@ -10,7 +10,11 @@ import {
   playlistModal,
   videoTobeAdded,
 } from "../../features/video/videoSlice";
-import { getAuth } from "../../features/auth/authSlice";
+import {
+  addVideoToHistory,
+  getAuth,
+  removeVideoFromWatchLater,
+} from "../../features/auth/authSlice";
 function WatchLaterCard({ video }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const videoState = useSelector(getVideo);

@@ -44,6 +44,10 @@ function VideoVertical({ video }) {
   const { isUserLoggedIn } = authState;
   const navigate = useNavigate();
   const isPresent = (id, array) => {
+    if (!isUserLoggedIn) {
+      navigate("/login");
+      return false;
+    }
     if (array.find((item) => item._id === id)) return true;
     else return false;
   };
@@ -86,61 +90,63 @@ function VideoVertical({ video }) {
               {video.creator} || {video.views}K
             </p>
           </div>
-          <div className="dropdown-action-button">
-            <BsThreeDotsVertical
-              onClick={() => setShowDropdown(!showDropdown)}
-            />
-            {showDropdown && (
-              <div className="dropdown">
-                <button
-                  className="dropdown-button"
-                  onClick={() => {
-                    if (isUserLoggedIn) {
+          {isUserLoggedIn && (
+            <div className="dropdown-action-button">
+              <BsThreeDotsVertical
+                onClick={() => setShowDropdown(!showDropdown)}
+              />
+              {showDropdown && (
+                <div className="dropdown">
+                  <button
+                    className="dropdown-button"
+                    onClick={() => {
                       dispatch(playlistModal());
                       dispatch(videoTobeAdded(video));
-                    } else navigate("/login");
-                  }}
-                >
-                  Add to Playlist
-                  <MdPlaylistAdd className="dropdown-icon" />
-                </button>
-                {isPresent(video._id, authState.watchlater) ? (
-                  <button
-                    className="dropdown-button"
-                    onClick={() => removeVideoFromWatchLaterHandler(video._id)}
+                    }}
                   >
-                    Remove From Watch Later
-                    <MdWatchLater className="dropdown-icon" />
+                    Add to Playlist
+                    <MdPlaylistAdd className="dropdown-icon" />
                   </button>
-                ) : (
-                  <button
-                    className="dropdown-button"
-                    onClick={() => addVideoToWatchLaterHandler(video)}
-                  >
-                    Add to watch Later
-                    <MdWatchLater className="dropdown-icon" />
-                  </button>
-                )}
-                {isPresent(video._id, authState.likes) ? (
-                  <button
-                    className="dropdown-button"
-                    onClick={() => removeVideoFromLikesHandler(video._id)}
-                  >
-                    Remove From Liked Videos
-                    <AiFillLike className="dropdown-icon" />
-                  </button>
-                ) : (
-                  <button
-                    className="dropdown-button"
-                    onClick={() => addVideoToLikesHandler(video)}
-                  >
-                    Add to Liked Videos
-                    <AiFillLike className="dropdown-icon" />
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+                  {isPresent(video._id, authState.watchlater) ? (
+                    <button
+                      className="dropdown-button"
+                      onClick={() =>
+                        removeVideoFromWatchLaterHandler(video._id)
+                      }
+                    >
+                      Remove From Watch Later
+                      <MdWatchLater className="dropdown-icon" />
+                    </button>
+                  ) : (
+                    <button
+                      className="dropdown-button"
+                      onClick={() => addVideoToWatchLaterHandler(video)}
+                    >
+                      Add to watch Later
+                      <MdWatchLater className="dropdown-icon" />
+                    </button>
+                  )}
+                  {isPresent(video._id, authState.likes) ? (
+                    <button
+                      className="dropdown-button"
+                      onClick={() => removeVideoFromLikesHandler(video._id)}
+                    >
+                      Remove From Liked Videos
+                      <AiFillLike className="dropdown-icon" />
+                    </button>
+                  ) : (
+                    <button
+                      className="dropdown-button"
+                      onClick={() => addVideoToLikesHandler(video)}
+                    >
+                      Add to Liked Videos
+                      <AiFillLike className="dropdown-icon" />
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
