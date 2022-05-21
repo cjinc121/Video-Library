@@ -4,7 +4,6 @@ import { getAuth } from "../features/auth/authSlice";
 
 const PrivateRoute = ({ navigateTo }) => {
   const authState = useSelector(getAuth);
-  console.log(authState);
   return authState.isUserLoggedIn ? (
     navigateTo
   ) : (

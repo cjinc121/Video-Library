@@ -17,23 +17,14 @@ import { LikesPage } from "./pages/LikesPage/LikesPage";
 import { HistoryPage } from "./pages/History/HistoryPage";
 import SignUpPage from "./pages/AuthPage/SignUpPage";
 import { useSelector } from "react-redux";
-import {
-  addNewVideo,
-  getAllVideo,
-  getVideo,
-} from "./features/video/videoSlice";
+import { getAllVideo, getVideo } from "./features/video/videoSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { useVideo } from "./context/video-context";
-import axios from "axios";
 function App() {
-  const { videoDispatch } = useVideo();
   const videoState = useSelector(getVideo);
-  console.log(videoState);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllVideo());
-    // videoDispatch({ type: "ADD_NEW_VIDEO", payload: res.data.videos });
   }, []);
   return (
     <div className="App">
