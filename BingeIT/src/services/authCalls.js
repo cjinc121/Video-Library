@@ -7,7 +7,7 @@ export const logInHandlerService = async (email, pass) => {
       email: email,
       password: pass,
     });
-
+    console.log(res);
     return res;
   } catch (error) {
     console.log("Invalid email or password", error);

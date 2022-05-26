@@ -43,7 +43,7 @@
   align-items: center;
 }
 .suggested-header{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 .suggested-display{
   display: flex;
@@ -51,10 +51,6 @@ flex-direction: column;
 justify-content: flex-start;
 align-items: center;
 gap: 1rem;
-background-color: var(--bg-color2);
- border: 1px solid var(--text-color2);
- margin: 5px;
-  padding: 10px;
   
 }
 @media screen and (min-width: 768px) and (max-width: 1250px) {

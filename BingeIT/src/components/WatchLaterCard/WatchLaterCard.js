@@ -64,7 +64,7 @@ function WatchLaterCard({ video }) {
             {video.title}
           </h4>
           <p>
-            {video.creator} &#9734; {video.views}
+            {video.creator} &#166;&#166; {video.views}
           </p>
         </div>
         <div className="dropdown-action-button">

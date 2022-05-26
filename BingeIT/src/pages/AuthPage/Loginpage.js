@@ -6,11 +6,12 @@ import "./AuthPage.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const authState = useSelector(getAuth);
   const dispatch = useDispatch();
+  const authState = useSelector(getAuth);
+  console.log(authState);
   const guestUser = {
-    email: "adarshbalika@gmail.com",
-    password: "adarshBalika123",
+    email: "aman.cjinc@gmail.com",
+    password: "123456789",
   };
   const navigate = useNavigate();
 

@@ -224,8 +224,9 @@ export const logIn = createAsyncThunk(
   async ({ email, password }) => {
     try {
       const res = await logInHandlerService(email, password);
+      console.log(res.data);
       localStorage.setItem("token", res.data.encodedToken);
-
+      localStorage.setItem("user", JSON.stringify(res.data.foundUser));
       return res.data;
     } catch (err) {
       return Promise.reject(err);
@@ -238,6 +239,7 @@ export const signUp = createAsyncThunk(
     try {
       const data = await signUpHandlerService(first, last, email, password);
       localStorage.setItem("token", data.encodedToken);
+      localStorage.setItem("user", JSON.stringify(data.createdUser));
       return data;
     } catch (err) {
       return Promise.reject(err);
