@@ -12,6 +12,8 @@ function Header() {
   const { isUserLoggedIn } = authState;
   const navigate = useNavigate();
   const [input, setInput] = useState("");
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   return (
     <div className="header">
       <div className="brand-name" onClick={() => navigate("/")}>
@@ -47,7 +49,7 @@ function Header() {
       )}
       {isUserLoggedIn && (
         <div className="user">
-          {authState.user.firstName && <h4>Hi {authState.user.firstName}</h4>}
+          <h4>Hi {currentUser.firstName}</h4>
           <FaUserCircle
             className="user-icon"
             onClick={() => navigate("/profile")}

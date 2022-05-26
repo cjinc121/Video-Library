@@ -9,9 +9,11 @@ const Profile = () => {
   const navigate = useNavigate();
   const signOutHandler = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     dispatch(endSession());
     navigate("/login");
   };
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -19,14 +21,10 @@ const Profile = () => {
     <div className="login-container">
       <div className="login-form">
         <h3>BingeIT</h3>
-
-        {authState.user.firstName && (
-          <h4>
-            {" "}
-            Name: {authState.user.firstName} {authState.user.lastName}
-          </h4>
-        )}
-        {authState.user.email && <p>Email: {authState.user.email}</p>}
+        <h4>
+          Name: {currentUser.firstName} {currentUser.lastName}
+        </h4>
+        <p>Email: {currentUser.email}</p>
         <button onClick={() => signOutHandler()}>Sign Out</button>
       </div>
     </div>
