@@ -4,15 +4,21 @@ import { AiFillHome, AiFillLike } from "react-icons/ai";
 import { RiPlayList2Fill } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAuth } from "../../features/auth/authSlice";
+import { search } from "../../features/video/videoSlice";
 const Footer = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const authState = useSelector(getAuth);
   const { isUserLoggedIn } = authState;
   return (
     <div className="footer">
-      <li className="footer-item" onClick={() => navigate("/")}>
+      <li className="footer-item" onClick={() => {
+        navigate("/");
+        dispatch(search(""))
+      }}>
         <AiFillHome className="footer-icon" />
         <div className="footer-item-name">Home</div>
       </li>

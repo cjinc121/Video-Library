@@ -10,17 +10,27 @@
   padding: 2rem;
   z-index: 2;
 }
+.brand-icon{
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 1rem;
+  margin-right: 10px;
+}
 .header .brand-name{
   color:var(--text-color);
   letter-spacing: 2px;
   font-size: 1.5rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 .header .search-box{
   display: flex;
 align-items: center;
 width: 50%;
 padding: 0 5rem;
+position: relative;
+
 }
 .search-input{
   padding: 10px;
@@ -29,8 +39,32 @@ background-color: var(--bg-color1);
 color: var(--text-color);
 border: 1px solid var(--text-color);
 }
+.search-dropdown{
+  position: absolute;
+  top: 3rem;
+  z-index: 7;
+  background-color: var(--text-color);
+  color: black;
+  padding: 5px;
+  width: 65%;
+}
+.search-dropdown-pill{
+  padding: 5px;
+  cursor:pointer
+}
 .search-input:active{
   border: none;
+}
+.cancel-button{
+  margin: 10px;
+  background-color: var(--bg-color2);
+  border: none;
+}
+.cancel-icon{
+  color:var(--text-color);
+  font-size: 1.1rem;
+  font-weight: 100;
+  cursor: pointer;
 }
 .search-button{
   margin: 10px;
@@ -62,12 +96,21 @@ cursor: pointer;
 }
 .header{
   display: flex;
+  flex-wrap: wrap;
+  height: max-content;
+
+  justify-content: center;
   gap: 1rem;
   justify-content: flex-start;
+  padding: 8px;
+}
+.header>.brand-name{
+  margin: auto;
+  padding-top: 10px;
 }
 .header .search-box{
-  width: 70%;
+  width: 90%;
   padding: 0.5rem;
-
+margin: auto;
 }
 }

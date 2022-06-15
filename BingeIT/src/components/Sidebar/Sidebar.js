@@ -4,11 +4,17 @@ import { RiPlayList2Fill } from "react-icons/ri";
 import { MdOutlineWatchLater } from "react-icons/md";
 import "./Sidebar.css";
 import { useNavigate } from "react-router-dom";
+import { search } from "../../features/video/videoSlice";
+import { useDispatch } from "react-redux";
 function Sidebar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <ul className="sidebar">
-      <li className="sidebar-item" onClick={() => navigate("/")}>
+      <li className="sidebar-item" onClick={() => {
+        navigate("/");
+        dispatch(search(""))
+      }}>
         <AiFillHome className="sidebar-icon" />
         <div className="sidebar-item-name">Home</div>
       </li>
