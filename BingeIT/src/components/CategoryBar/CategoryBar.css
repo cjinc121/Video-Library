@@ -7,7 +7,7 @@
   align-items: center;
   overflow-x: scroll;
   position: fixed;
-  z-index: 2;
+  z-index: 1;
 }
 .chips{
   padding:5px 10px;
